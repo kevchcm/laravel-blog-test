@@ -10,31 +10,7 @@
     
     <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-4">
         <!--  Category -->
-        <x-dropdown :currentCategory="$current ?? null">
-            <x-slot:trigger>
-                <button class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
-        
-                    {{ !is_null($currentCategory) ? ucfirst($currentCategory->name) : 'Categories' }}
-        
-                    <x-icons name="arrow"/>
-                </button>
-            </x-slot:trigger>
-            
-            @if(!is_null($currentCategory))
-                <x-dropdown-item href="/">
-                    All
-                </x-dropdown-item>
-            @endif
-    
-            @foreach($categories as $category)
-                <x-dropdown-item
-                    href="/category/{{$category->slug}}"
-                    :active="!is_null($currentCategory) && $currentCategory->is($category)"
-                >
-                    {{ ucwords($category->name) }}
-                </x-dropdown-item>
-            @endforeach
-        </x-dropdown>
+        <x-category-dropdown />
         
         <!-- Other Filters -->
         {{--<div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl">--}}
