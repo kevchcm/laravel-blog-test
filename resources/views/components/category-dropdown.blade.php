@@ -9,14 +9,14 @@
     </x-slot:trigger>
     
     @if(!is_null($currentCategory))
-        <x-dropdown-item href="/">
+        <x-dropdown-item href="/?{{ http_build_query(request()->except('category', 'page')) }}">
             All
         </x-dropdown-item>
     @endif
     
     @foreach($categories as $category)
         <x-dropdown-item
-            href="/?category={{$category->slug}}&{{ http_build_query(request()->except('category')) }}"
+            href="/?category={{$category->slug}}&{{ http_build_query(request()->except('category', 'page')) }}"
             :active="!is_null($currentCategory) && $currentCategory->is($category)"
         >
             {{ ucwords($category->name) }}
