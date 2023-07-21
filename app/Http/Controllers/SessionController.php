@@ -25,14 +25,13 @@ class SessionController extends Controller
            'password' => ['required']
         ]);
 
-        if (auth()->attempt($atrributes)){
-            return redirect(route('home'))->with('success', 'Welcome back!');
+        if (!auth()->attempt($atrributes)){
+            throw ValidationException::withMessages([
+                'email' => 'Incorrect credentials'
+            ]);
+            //return back()->withInput(['email'])->withErrors(['email' => 'Incorrect credentials']);
         }
 
-        throw ValidationException::withMessages([
-            'email' => 'Incorrect credentials'
-        ]);
-
-        //return back()->withInput(['email'])->withErrors(['email' => 'Incorrect credentials']);
+        return redirect(route('home'))->with('success', 'Welcome back!');
     }
 }
