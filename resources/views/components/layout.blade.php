@@ -15,4 +15,6 @@
 
         <x-footer></x-footer>
     </section>
+    
+    <x-flash-message />
 </body>
