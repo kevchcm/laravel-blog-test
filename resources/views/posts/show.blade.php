@@ -51,6 +51,51 @@
                         {!! $post->body !!}
                     </div>
                 </div>
+                
+                <section class="col-span-8 col-start-5 mt-10 space-y-6">
+    
+                    @auth
+                        <form method="POST" action="{{ route('comment-store', ['post' => $post->slug]) }}"
+                              class="border border-black border-opacity-5 rounded-xl p-6 space-x-4">
+                            @csrf
+            
+                            <header class="flex items-center">
+                                <img src="/images/lary-avatar.svg" alt="Avatar" width="40" height="40" class="rounded-full">
+                
+                                <h2 class="ml-4">Add a comment</h2>
+                            </header>
+            
+                            <div>
+                            <textarea
+                                name="body"
+                                rows="5"
+                                class="resize-none w-full mt-6 border border-black border-opacity-5 rounded-xl text-sm"
+                                required
+                            ></textarea>
+                            </div>
+                            
+                            @error('body')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+            
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-blue-500 rounded-full text-xs font-semibold text-white uppercase py-3 px-5 mt-6">
+                                    Post
+                                </button>
+                            </div>
+                        </form>
+                    @else
+                        <a href="{{ route('login-create') }}" class="text-blue-500">
+                            Login to add a comment.
+                        </a>
+                    @endauth
+                    
+                    @if($post->comments)
+                        @foreach($post->comments as $comment)
+                            <x-post-comment :comment="$comment"/>
+                        @endforeach
+                    @endif
+                </section>
             </article>
         </main>
     </section>

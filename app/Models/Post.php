@@ -34,6 +34,10 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function comments() {
+        return $this->hasMany(Comment::class)->orderByDesc('created_at');
+    }
+
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, fn($query, $search)=>
             $query->where(fn($query)=>
