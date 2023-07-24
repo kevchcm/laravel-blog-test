@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -14,5 +16,28 @@ class PostController extends Controller
 
     public function show(Post $post){
         return view('posts.show', ['post' => $post]);
+    }
+
+    public function create() {
+        return view('admin.posts.create');
+    }
+
+    public function store() {
+
+        $attributes = request()->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'thumbnail' => ['required', 'image'],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
+
+        $attributes['user_id'] = auth()->user()->id;
+        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+
+        Post::create($attributes);
+
+        return redirect(route('home'))->with('success', 'Your post has been published');
     }
 }

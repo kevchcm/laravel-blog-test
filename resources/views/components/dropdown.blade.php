@@ -2,7 +2,7 @@
     'currentCategory'
 ])
 
-<div class="relative lg:inline-flex items-center bg-gray-100 rounded-xl">
+<div class="relative lg:inline-flex items-center">
     <div x-data="{ show: false }">
         <div
             @click="show = !show"

@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Post
+ *
+ * @mixin Eloquent
+ */
 class Post extends Model
 {
     use HasFactory;
@@ -13,7 +19,10 @@ class Post extends Model
         'slug',
         'excerpt',
         'title',
-        'body'
+        'body',
+        'user_id',
+        'category_id',
+        'thumbnail'
     ];
 
     //eager loading by default

@@ -9,14 +9,36 @@
 {{--        @if(auth()->check())--}}
 {{--        @endif--}}
         @auth
-            <span class="text-xs font-bold uppercase">
-                Welcome, {{ auth()->user()->name }}
-            </span>
-        
-            <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
-                @csrf
-                <button>Logout</button>
-            </form>
+            <x-dropdown>
+                <x-slot name="trigger">
+                    <button class="text-xs font-bold uppercase">
+                        Welcome, {{ auth()->user()->name }}
+                    </button>
+                </x-slot>
+                
+                <x-dropdown-item href="{{ route('post-create') }}">
+                    Dashboard
+                </x-dropdown-item>
+                
+                <x-dropdown-item
+                    href="{{ route('post-create') }}"
+                    :active="request()->routeIs('post-create')"
+                >
+                    New Post
+                </x-dropdown-item>
+                
+                <x-dropdown-item
+                    href="{{ route('post-create') }}
+                    x-data={}"
+                    @click.prevent="document.querySelector('#logout-form').submit()"
+                >
+                    Logout
+                </x-dropdown-item>
+                
+                <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+                    @csrf<button>Logout</button>
+                </form>
+            </x-dropdown>
         @else
             <a href="{{ route('register-create') }}" class="text-xs font-bold uppercase">
                 Register

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
@@ -34,3 +35,15 @@ Route::get('login', [SessionController::class, 'create'])
 Route::post('login', [SessionController::class, 'store'])
     ->name('login-store')
     ->middleware('guest');
+
+Route::get('admin/posts/create', [PostController::class, 'create'])
+    ->name('post-create')
+    ->middleware('admin');
+
+Route::get('admin/posts', [AdminController::class, 'index'])
+    ->name('admin-post-show')
+    ->middleware('admin');
+
+Route::post('admin/posts', [PostController::class, 'store'])
+    ->name('post-store')
+    ->middleware('admin');

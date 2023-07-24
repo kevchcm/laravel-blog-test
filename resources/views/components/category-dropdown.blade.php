@@ -1,6 +1,6 @@
 <x-dropdown :currentCategory="$current ?? null">
     <x-slot:trigger>
-        <button class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
+        <button class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex bg-gray-100 rounded-xl">
             
             {{ !is_null($currentCategory) ? ucfirst($currentCategory->name) : 'Categories' }}
             
